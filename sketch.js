@@ -11,10 +11,11 @@ var positions = [];
 
 function setup() {
   createCanvas(500, 500);
-  pixelDensity(displayDensity());
+  pixelDensity(4);
   strokeWeight(weight);
   frameRate(1);
-  noiseDetail(2, 0.2);
+  smooth();
+  noiseDetail(4, 0.4);
   color1 = color(0, 128, 255);
   color2 = color(0, 255, 76);
 }
