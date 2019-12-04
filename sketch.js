@@ -5,6 +5,7 @@ var lenMax = 10;
 var circSize = 10;
 var bgCol = 0;
 var fillFreq = 0.5;
+var color1, color2;
 
 var positions = [];
 
@@ -13,6 +14,9 @@ function setup() {
   pixelDensity(displayDensity());
   strokeWeight(weight);
   frameRate(1);
+  noiseDetail(2, 0.2);
+  color1 = color(0, 128, 255);
+  color2 = color(0, 255, 76);
 }
 
 function draw() {
@@ -31,6 +35,7 @@ function draw() {
         y: y,
         indexX: xSize,
         indexY: ySize,
+        noiseVal: noise(xSize, ySize),
         available: true
       }
       positions[xSize].push(position);
@@ -39,15 +44,16 @@ function draw() {
   for(var i = 0; i < positions.length; i++) {
     var row = positions[i];
     for(var j = 0; j < row.length; j++) {
-      var col = color(random(255), random(255), random(255));
-      fill(0);
-      stroke(col);
+      var col;
       var len = random(lenMin, lenMax);
       var currentPosition;
       var nextPosition;
       if(positions[i][j].available){
         positions[i][j].available = false;
         currentPosition = positions[i][j];
+        col = getColor(currentPosition.noiseVal);
+        fill(0);
+        stroke(col);
       }else{
         continue;
       }
@@ -135,4 +141,8 @@ function drawCircle(x, y, perc, col){
   }else{
     circle(x, y, circSize);
   }
+}
+
+function getColor(noiseVal){
+  return lerpColor(color1, color2, noiseVal);
 }
