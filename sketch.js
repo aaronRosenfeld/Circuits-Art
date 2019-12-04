@@ -1,8 +1,8 @@
-var spacing = 10;
+var spacing = 100;
 var weight = 1;
-var lenMin = 3;
-var lenMax = 5;
-var circSize = 5;
+var lenMin = 10;
+var lenMax = 20;
+var circSize = 25;
 var bgCol = 0;
 var fillFreq = 0.5;
 var color1, color2;
@@ -12,13 +12,15 @@ var positions = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  //createCanvas(2880, 1800);
   pixelDensity(4);
   strokeWeight(weight);
   frameRate(1);
+  rectMode(CENTER);
   smooth();
   noiseDetail(4, 0.4);
-  color1 = color(0, 128, 255);
-  color2 = color(0, 255, 76);
+  color1 = color(random(255), random(255), random(255));
+  color2 = color(random(255), random(255), random(255));
 }
 
 function draw() {
@@ -135,13 +137,29 @@ function validNextPosition(x, y){
 }
 
 function drawCircle(x, y, perc, col){
-  if(random(1) > perc){
+  var tempRand = random(1);
+  if(tempRand > perc && tempRand < 0.9){
     push();
     fill(col);
     circle(x, y, circSize);
     pop();
+  }else if (tempRand > 0.995){
+    if(random(1) > .5){
+      push();
+      fill(bgCol);
+      square(x, y, circSize);
+      pop();
+    }else{
+      push();
+      fill(col);
+      square(x, y, circSize);
+      pop();
+    }
   }else{
+    push();
+    fill(bgCol);
     circle(x, y, circSize);
+    pop();
   }
 }
 
@@ -160,6 +178,8 @@ function windowResized() {
 
 function keyPressed(){
   if(key == ' '){
+    color1 = color(random(255), random(255), random(255));
+    color2 = color(random(255), random(255), random(255));
     redraw();
   }
 }
