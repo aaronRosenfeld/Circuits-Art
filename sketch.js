@@ -10,7 +10,7 @@ var color1, color2;
 var positions = [];
 
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(windowWidth, windowHeight);
   pixelDensity(4);
   strokeWeight(weight);
   frameRate(1);
@@ -75,8 +75,9 @@ function draw() {
 function validNextPosition(x, y){
   var validPos = [];
   var setAvail = [];
-  var xLen = positions[x].length-1;
-  var yLen = positions.length-1;
+  var yLen = positions[x].length-1;
+  var xLen = positions.length-1;
+  //print(x + " " + y + " " + xLen + " " + yLen);
   if(x>0 && y>0 && positions[x-1][y-1].available){
     validPos.push(positions[x-1][y-1]);
     setAvail.push(0);
