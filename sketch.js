@@ -1,11 +1,12 @@
-var spacing = 20;
-var weight = 2;
+var spacing = 10;
+var weight = 1;
 var lenMin = 3;
-var lenMax = 10;
-var circSize = 10;
+var lenMax = 5;
+var circSize = 5;
 var bgCol = 0;
 var fillFreq = 0.5;
 var color1, color2;
+var myColorMode = "NOISE";
 
 var positions = [];
 
@@ -77,7 +78,6 @@ function validNextPosition(x, y){
   var setAvail = [];
   var yLen = positions[x].length-1;
   var xLen = positions.length-1;
-  //print(x + " " + y + " " + xLen + " " + yLen);
   if(x>0 && y>0 && positions[x-1][y-1].available){
     validPos.push(positions[x-1][y-1]);
     setAvail.push(0);
@@ -146,5 +146,20 @@ function drawCircle(x, y, perc, col){
 }
 
 function getColor(noiseVal){
-  return lerpColor(color1, color2, noiseVal);
+  if(myColorMode == "NOISE"){
+    return lerpColor(color1, color2, noiseVal);
+  }else{
+    return color(random(255), random(255), random(255));
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  redraw();
+}
+
+function keyPressed(){
+  if(key == ' '){
+    redraw();
+  }
 }
