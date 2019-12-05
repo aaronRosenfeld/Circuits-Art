@@ -1,17 +1,23 @@
-var spacing = 100;
-var weight = 1;
-var lenMin = 10;
-var lenMax = 20;
-var circSize = 25;
+var spacing = 10;
+var weight = 3;
+var lenMin = 3;
+var lenMax = 5;
+var circSize = 5;
 var bgCol = 0;
 var fillFreq = 0.5;
 var color1, color2;
-var myColorMode = "NOISE";
+var myColorMode = "RANDOM";
+let img;
 
 var positions = [];
 
+function preload() {
+  img = loadImage('assets/image.jpg');
+}
+
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  //img.loadPixels();
+  createCanvas(img.width, img.height);
   //createCanvas(2880, 1800);
   pixelDensity(4);
   strokeWeight(weight);
@@ -39,7 +45,7 @@ function draw() {
         y: y,
         indexX: xSize,
         indexY: ySize,
-        noiseVal: noise(xSize, ySize),
+        photoCol: img.get(x, y),
         available: true
       }
       positions[xSize].push(position);
@@ -55,7 +61,7 @@ function draw() {
       if(positions[i][j].available){
         positions[i][j].available = false;
         currentPosition = positions[i][j];
-        col = getColor(currentPosition.noiseVal);
+        col = currentPosition.photoCol;
         fill(0);
         stroke(col);
       }else{
@@ -166,15 +172,15 @@ function drawCircle(x, y, perc, col){
 function getColor(noiseVal){
   if(myColorMode == "NOISE"){
     return lerpColor(color1, color2, noiseVal);
-  }else{
+  }else if(myColorMode == "RANDOM"){
     return color(random(255), random(255), random(255));
   }
 }
 
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  redraw();
-}
+// function windowResized() {
+//   resizeCanvas(windowWidth, windowHeight);
+//   redraw();
+// }
 
 function keyPressed(){
   if(key == ' '){
